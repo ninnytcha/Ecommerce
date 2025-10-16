@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import '../styles/navbar.css'; // optional CSS file
 import { Logout } from '../utils/Logout';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Navbar = () => {
@@ -25,9 +25,9 @@ const LogoutUser = () => {
         <ul className="nav-links">
           <li><a href="/">Home</a></li>
           <li><a href="/dashboard">Dashboard</a></li>
+          <li><Link to="/cart">Cart</Link></li>
         </ul>
       </div>
-
       <div className="navbar-right">
         {token ? (
           <div className="user-profile">
