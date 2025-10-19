@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import "../styles/productDetail.css"; 
 import { Link, useParams } from 'react-router-dom';
 import { fetchProduct } from '../api/product';
