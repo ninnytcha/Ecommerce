@@ -1,12 +1,9 @@
-// components/Cart.js
 
-import React from 'react';
 import CartItem from '../components/CartItem';
 import "../styles/cart.css";
 import { Link } from 'react-router-dom';
 
 const Cart = ({ cartItems =[]}) => {
-  // Calculate total
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0

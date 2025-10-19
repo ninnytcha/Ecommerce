@@ -1,7 +1,3 @@
-// components/CartItem.js
-
-import React from 'react';
-
 const CartItem = ({ item }) => {
   const { title, price, image, quantity } = item;
 

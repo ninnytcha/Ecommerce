@@ -1,5 +1,4 @@
-// Login.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import "../styles/auth.css"
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +14,6 @@ export const Auth = ({ onLogin }) => {
     setError('');
     setLoading(true);
 
-    // Simulate an API call or handle login
     try {
       if (!username || !password) {
         throw new Error('Please fill in all fields.');

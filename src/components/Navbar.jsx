@@ -1,9 +1,7 @@
-// Navbar.jsx
-import React, { useState } from 'react';
-import '../styles/navbar.css'; // optional CSS file
+import { useState } from 'react';
+import '../styles/navbar.css';
 import { Logout } from '../utils/Logout';
 import { Link, useNavigate } from 'react-router-dom';
-
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -25,12 +23,18 @@ const LogoutUser = () => {
         <ul className="nav-links">
           <li><a href="/">Home</a></li>
           <li><a href="/dashboard">Dashboard</a></li>
-          <li><Link to="/cart">Cart</Link></li>
         </ul>
       </div>
       <div className="navbar-right">
         {token ? (
           <div className="user-profile">
+            <Link to="/cart">
+              <img
+                className="cartpic" 
+                src="https://www.citypng.com/public/uploads/preview/hd-shopping-cart-white-logo-icon-transparent-png-701751694973936amdcratijm.png"            
+                alt="Cart pic"
+              />
+            </Link>
             <img
               src={user.avatar || 'https://i.pravatar.cc/40'}
               alt="User Avatar"
