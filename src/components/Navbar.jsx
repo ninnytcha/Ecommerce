@@ -3,7 +3,7 @@ import '../styles/navbar.css';
 import { Logout } from '../utils/Logout';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+export const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState(false)
   const token = localStorage.getItem("token")
@@ -56,4 +56,3 @@ const LogoutUser = () => {
   );
 };
 
-export default Navbar;

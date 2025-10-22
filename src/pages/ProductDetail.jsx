@@ -22,11 +22,27 @@ const ProductDetail = () => {
     
         loadProducts();
       }, []);
+
+      const AddToCart = () => {
+        const cart = { userId: 1, products: [{ id: 4 }] };
+        fetch(`https://fakestoreapi.com/carts/1`,{
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(cart)
+        }) .then(response => response.json())
+  .then(data => console.log(data)).then(()=>
+            alert("product added to cart")
+        ).catch((error)=>
+          console.error(error)
+        )
+
+      }
+
       if (loading) {
         return <span>Loading...</span>
       }
-
-
 
   return (
     <div className="product-detail">
@@ -38,6 +54,7 @@ const ProductDetail = () => {
         <p><strong>Category:</strong> {product.category}</p>
         <p><strong>Description:</strong> {product.description}</p>
         <p><strong>Rating:</strong> {product.rating?.rate} ⭐ ({product.rating?.count} reviews)</p>
+        <button onClick={AddToCart}>Add to Cart</button>
       </div>
     </div>
   );
