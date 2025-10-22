@@ -4,6 +4,7 @@ import { HomePage } from "./pages/HomePage"
 import ProductDetail from "./pages/ProductDetail"
 import { Cart } from "./pages/Cart"
 import { Navbar } from "./components/Navbar"
+import Register from "./pages/Register"
 
 function PrivateRoute ({children}) {
   const token = localStorage.getItem("token")
@@ -21,10 +22,11 @@ function App() {
     <>
     <Navbar/>
     <Routes>
-      <Route path="/login" element={<PublicRoute><Auth/></PublicRoute>}/>
+      <Route path="/auth/login" element={<Auth/>}/>
       <Route path="/" element={<PrivateRoute><HomePage/></PrivateRoute>}/>
       <Route path="/product/:id" element={<PrivateRoute><ProductDetail/></PrivateRoute>}/>
       <Route path="/cart" element={<PrivateRoute><Cart/></PrivateRoute>}/>
+      <Route path="/auth/register" element={<Register/>}/>
     </Routes>
     
     </>

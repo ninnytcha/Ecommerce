@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import "../styles/auth.css"
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Auth = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -70,6 +70,7 @@ export const Auth = ({ onLogin }) => {
             {loading ? 'Logging in...' : 'Login'}
             </button>
         </form>
+        <span>Don't have an account? <Link to="/auth/register">Register</Link></span>
         </div>
     </div>
   );
