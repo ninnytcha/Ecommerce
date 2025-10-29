@@ -26,12 +26,14 @@ const ProductList = () => {
     return <span>Loading...</span>
   }
   return (
-    <div className="product-list">
-      {data.map(product => (
-        <Link key={product.id} to={`/product/${product.id}`}>
-          <ProductCard product={product} />
-        </Link>
-      ))}
+    <div className="product-cont">
+      <div className="product-list">
+        {data.map(product => (
+          <Link key={product.id} to={`/product/${product.id}`}>
+            <ProductCard product={product} />
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };

@@ -11,7 +11,7 @@ export const Navbar = () => {
 
 const LogoutUser = () => {
     Logout()
-    navigate("/login")
+    navigate("/auth/login")
 }
 
   const toggleMenu = () => setShowMenu(!showMenu);
@@ -20,10 +20,9 @@ const LogoutUser = () => {
     <nav className="navbar">
       <div className="navbar-left">
         <h1 className="logo">MyApp</h1>
-        <ul className="nav-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/dashboard">Dashboard</a></li>
-        </ul>
+        <h2 className="nav-links">
+          <a href="/">Home</a>
+        </h2>
       </div>
       <div className="navbar-right">
         {token ? (
@@ -49,7 +48,7 @@ const LogoutUser = () => {
             )}
           </div>
         ) : (
-          <a href="/login" className="login-btn">Login</a>
+          <a href="/auth/login" className="login-btn">Login</a>
         )}
       </div>
     </nav>
