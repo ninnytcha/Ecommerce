@@ -69,8 +69,9 @@ export const Auth = ({ onLogin }) => {
             <button type="submit" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
             </button>
+            <br/><br/>
+            <label><span>Don't have an account? <Link to="/auth/register">Register</Link></span></label>
         </form>
-        <span>Don't have an account? <Link to="/auth/register">Register</Link></span>
         </div>
     </div>
   );

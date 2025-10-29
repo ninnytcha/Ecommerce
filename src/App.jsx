@@ -8,7 +8,7 @@ import Register from "./pages/Register"
 
 function PrivateRoute ({children}) {
   const token = localStorage.getItem("token")
-  return token? children: <Navigate to="/login" replace/>
+  return token? children: <Navigate to="/auth/login" replace/>
 }
 
 function PublicRoute ({children}) {
@@ -23,8 +23,8 @@ function App() {
     <Navbar/>
     <Routes>
       <Route path="/auth/login" element={<Auth/>}/>
-      <Route path="/" element={<PrivateRoute><HomePage/></PrivateRoute>}/>
-      <Route path="/product/:id" element={<PrivateRoute><ProductDetail/></PrivateRoute>}/>
+      <Route path="/" element={<HomePage/>}/>
+      <Route path="/product/:id" element={<ProductDetail/>}/>
       <Route path="/cart" element={<PrivateRoute><Cart/></PrivateRoute>}/>
       <Route path="/auth/register" element={<Register/>}/>
     </Routes>
