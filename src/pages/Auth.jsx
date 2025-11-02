@@ -3,7 +3,7 @@ import "../styles/auth.css"
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Auth = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -15,23 +15,20 @@ export const Auth = ({ onLogin }) => {
     setLoading(true);
 
     try {
-      if (!username || !password) {
+      if (!email || !password) {
         throw new Error('Please fill in all fields.');
       }      
-      const response = await fetch("https://fakestoreapi.com/auth/login",{
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username, password
+      const response = await fetch("https://api.escuelajs.co/api/v1/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({email, password}),
         })
-      })
-      const data = await response.json()
-      if (response.ok) {
-        localStorage.setItem("token",data.token)
-        navigate("/")
-      }
+        const data = await response.json()
+        if (response.ok) {
+            localStorage.setItem("token",data.access_token)
+            localStorage.setItem("refresh_token",data.refresh_token)
+            navigate("/")
+        } 
     } catch (err) {
       setError(err.message);
     } finally {
@@ -45,11 +42,11 @@ export const Auth = ({ onLogin }) => {
         <h2>Login</h2>
         <form onSubmit={handleLogin}>
             <div>
-            <label>username:</label>
+            <label>email:</label>
             <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
             />
             </div>

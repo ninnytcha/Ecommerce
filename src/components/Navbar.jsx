@@ -3,12 +3,12 @@ import '../styles/navbar.css';
 import { Logout } from '../utils/Logout';
 import { Link, useNavigate } from 'react-router-dom';
 
-export const Navbar = () => {
+export const Navbar = ({profile}) => {
   const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState(false)
   const token = localStorage.getItem("token")
   const navigate = useNavigate()
-
+console.log(profile)
 const LogoutUser = () => {
     Logout()
     navigate("/auth/login")
@@ -27,6 +27,7 @@ const LogoutUser = () => {
       <div className="navbar-right">
         {token ? (
           <div className="user-profile">
+            {profile?.role=="admin" && <Link to="/dashboard"><button>Dashboard</button></Link>}
             <Link to="/cart">
               <img
                 className="cartpic" 
@@ -35,14 +36,14 @@ const LogoutUser = () => {
               />
             </Link>
             <img
-              src={user.avatar || 'https://i.pravatar.cc/40'}
+              src={profile?.avatar}
               alt="User Avatar"
               className="avatar"
               onClick={toggleMenu}
             />
             {showMenu && (
               <div className="dropdown-menu">
-                <p>{user.name || user.email}</p>
+                <p>{profile.name || profile.email}</p>
                 <button onClick={LogoutUser}>Logout</button>
               </div>
             )}
