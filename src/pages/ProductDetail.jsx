@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import "../styles/productDetail.css"; 
 import { Link, useParams } from 'react-router-dom';
-import { fetchProduct } from '../api/product';
+import { fetchProduct, fetchProduct2 } from '../api/product';
 
 const ProductDetail = () => {
   const token = localStorage.getItem("token")
@@ -12,7 +12,7 @@ const ProductDetail = () => {
         const loadProducts = async () => {
           try {
             setLoading(true)
-            const products = await fetchProduct({id});
+            const products = await fetchProduct2({id});
             setProduct(products);
           } catch (error) {
             console.error("Failed to fetch products:", error);
@@ -33,7 +33,7 @@ const ProductDetail = () => {
           },
           body: JSON.stringify(cart)
         }) .then(response => response.json())
-  .then(data => console.log(data)).then(()=>
+  .then(()=>
             alert("product added to cart")
         ).catch((error)=>
           console.error(error)
@@ -48,13 +48,12 @@ const ProductDetail = () => {
   return (
     <div className="product-detail">
         <Link to="/">Go back</Link>
-      <img src={product.image} alt={product.title} className="product-image" />
+      <img src={product?.images?.[0]} alt={product.title} className="product-image" />
       <div className="product-info">
         <h2>{product.title}</h2>
         <p><strong>Price:</strong> ${product.price}</p>
-        <p><strong>Category:</strong> {product.category}</p>
-        <p><strong>Description:</strong> {product.description}</p>
-        <p><strong>Rating:</strong> {product.rating?.rate} ⭐ ({product.rating?.count} reviews)</p>
+        <p><strong>Category:</strong> {product.category?.name}</p>
+        <p><strong>Description:</strong> {product.description}</p> 
         {token && <button onClick={AddToCart}>Add to Cart</button> } 
         
       </div>

@@ -45,7 +45,7 @@ export default function Register() {
             localStorage.setItem("refresh_token",data.refresh_token)
             window.location.href="/"
         } 
-      console.log("Registered user:", formData);
+      
       setMessage("Registration successful!");
     } catch (error) {
       console.error("Registration failed:", error);
