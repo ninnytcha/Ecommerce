@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { fetchProduct } from '../api/product';
 
 const ProductDetail = () => {
+  const token = localStorage.getItem("token")
     const {id}=useParams()
      const [product, setProduct] = useState([])
         const [loading, setLoading] = useState(false)
@@ -54,7 +55,8 @@ const ProductDetail = () => {
         <p><strong>Category:</strong> {product.category}</p>
         <p><strong>Description:</strong> {product.description}</p>
         <p><strong>Rating:</strong> {product.rating?.rate} ⭐ ({product.rating?.count} reviews)</p>
-        <button onClick={AddToCart}>Add to Cart</button>
+        {token && <button onClick={AddToCart}>Add to Cart</button> } 
+        
       </div>
     </div>
   );

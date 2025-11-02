@@ -43,7 +43,7 @@ export default function Register() {
         if (response.ok) {
             localStorage.setItem("token",data.access_token)
             localStorage.setItem("refresh_token",data.refresh_token)
-            navigate("/")
+            window.location.href="/"
         } 
       console.log("Registered user:", formData);
       setMessage("Registration successful!");

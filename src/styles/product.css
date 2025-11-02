@@ -12,4 +12,15 @@
   border-radius: 8px;
   text-align: center;
   width: 200px;
+  height: 100%;
+
+}
+.product-card img {
+  height: 50%;
+}
+.product-card-text {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 50%;
 }
