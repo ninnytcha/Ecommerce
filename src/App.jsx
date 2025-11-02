@@ -6,7 +6,8 @@ import { Cart } from "./pages/Cart"
 import { Navbar } from "./components/Navbar"
 import Register from "./pages/Register"
 import { useEffect, useState } from "react"
-import { Dashboard } from "./pages/Dashboard"
+import { Dashboard } from "./pages/admin/Dashboard"
+import { CreateProduct } from "./pages/admin/CreateProduct"
 
 function PrivateRoute ({children}) {
   const token = localStorage.getItem("token")
@@ -34,12 +35,17 @@ function App() {
             "Authorization": `Bearer ${token}`
          },
     })
+    if (response.status === 400) {
+        localStorage.removeItem("token")
+        localStorage.removeItem("refresh-token")
+        window.location.href = "/auth/login"
+    }
     const data = await response.json()
     setProfile(data)
   }
 fetchUserProfile()
   }, [token])
-    console.log(profile)
+   
   return (
     <>
     <Navbar profile={profile}/>
@@ -50,6 +56,7 @@ fetchUserProfile()
       <Route path="/cart" element={<PrivateRoute><Cart/></PrivateRoute>}/>
       <Route path="/auth/register" element={<Register/>}/>
       <Route path="/dashboard" element={<PrivateRoute><Dashboard/></PrivateRoute>}/>
+      <Route path="/dashboard/product-create" element={<PrivateRoute><CreateProduct/></PrivateRoute>}/>
     </Routes>
     
     </>

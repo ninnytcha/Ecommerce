@@ -6,7 +6,16 @@ export const fetchUserProfile = async () => {
             "Authorization": `Bearer ${token}`
          },
     })
+
+    console.log(response.name)
+    if (response.name == "EntityNotFoundError") {
+        console.log("problem identity")
+        localStorage.removeItem("token")
+        localStorage.removeItem("refresh-token")
+        window.location.href = "/auth/login"
+    }
     const data = await response.json()
+    console.log(data)
     return data
 
 }

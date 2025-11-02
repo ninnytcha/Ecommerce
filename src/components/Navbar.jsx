@@ -8,7 +8,7 @@ export const Navbar = ({profile}) => {
   const [user, setUser] = useState(false)
   const token = localStorage.getItem("token")
   const navigate = useNavigate()
-console.log(profile)
+
 const LogoutUser = () => {
     Logout()
     navigate("/auth/login")
