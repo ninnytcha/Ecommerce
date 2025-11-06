@@ -8,6 +8,9 @@ import Register from "./pages/Register"
 import { useEffect, useState } from "react"
 import { Dashboard } from "./pages/admin/Dashboard"
 import { CreateProduct } from "./pages/admin/CreateProduct"
+import { fetchUserProfile } from "./api/user"
+import { NotFound } from "./pages/NotFound404"
+import { Products } from "./pages/admin/Products"
 
 function PrivateRoute ({children}) {
   const token = localStorage.getItem("token")
@@ -21,31 +24,37 @@ function PublicRoute ({children}) {
 
 function App() {
   const [profile, setProfile] = useState(null)
+  const [loading, setLoading] = useState(true)
   const token = localStorage.getItem("token")
   useEffect(()=> {
 
     if (!token) {
       setProfile(null)
     }
-    const fetchUserProfile = async () => {
-    const token = localStorage.getItem("token")
-    const response = await fetch("https://api.escuelajs.co/api/v1/auth/profile", {
-        method: "GET",
-        headers: { "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-         },
-    })
-    if (response.status === 400) {
-        localStorage.removeItem("token")
-        localStorage.removeItem("refresh-token")
-        window.location.href = "/auth/login"
-    }
-    const data = await response.json()
-    setProfile(data)
-  }
-fetchUserProfile()
+    const fetchUser = async () => {
+      try {
+      setProfile(await fetchUserProfile())
+    } catch {
+      console.error("error in fetching user")
+    } finally {
+      setLoading(false)
+    }}
+    fetchUser()
+    
   }, [token])
-   
+  
+  if (loading) {
+    return (
+      <><span>Loading...</span></>
+    )
+  }
+   function AdminRoute ({children}) {
+    console.log(profile)
+  if (token && profile?.role == "admin") {
+    return children;
+  } else {
+    return <Navigate to="/" replace />;
+  }}
   return (
     <>
     <Navbar profile={profile}/>
@@ -55,8 +64,10 @@ fetchUserProfile()
       <Route path="/product/:id" element={<ProductDetail/>}/>
       <Route path="/cart" element={<PrivateRoute><Cart/></PrivateRoute>}/>
       <Route path="/auth/register" element={<Register/>}/>
-      <Route path="/dashboard" element={<PrivateRoute><Dashboard/></PrivateRoute>}/>
-      <Route path="/dashboard/product-create" element={<PrivateRoute><CreateProduct/></PrivateRoute>}/>
+      <Route path="/dashboard" element={<AdminRoute><Dashboard/></AdminRoute>}/>
+      <Route path="/dashboard/product-create" element={<AdminRoute><CreateProduct/></AdminRoute>}/>
+      <Route path="/dashboard/products" element={<AdminRoute><Products/></AdminRoute>}/>
+      <Route path="*" element={<NotFound/>}/>
     </Routes>
     
     </>

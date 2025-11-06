@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ProductCreateForm({ onSubmit }) {
+function ProductCreateForm() {
   const [formData, setFormData] = useState({
     title: "",
     price: "",
@@ -45,7 +45,7 @@ function ProductCreateForm({ onSubmit }) {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -60,9 +60,12 @@ function ProductCreateForm({ onSubmit }) {
       categoryId: Number(formData.categoryId),
     };
 
-    if (onSubmit) {
-      onSubmit(productData);
-    }
+    const response = await fetch("https://api.escuelajs.co/api/v1/products", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(productData),
+        })
+        console.log(response)
 
     // Reset form
     setFormData({
