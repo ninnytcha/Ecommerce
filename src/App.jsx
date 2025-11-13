@@ -11,6 +11,8 @@ import { CreateProduct } from "./pages/admin/CreateProduct"
 import { fetchUserProfile } from "./api/user"
 import { NotFound } from "./pages/NotFound404"
 import { Products } from "./pages/admin/Products"
+import { UserList } from "./pages/admin/UsersList"
+import { CreateUser } from "./pages/admin/CreateUser"
 
 function PrivateRoute ({children}) {
   const token = localStorage.getItem("token")
@@ -65,9 +67,11 @@ function App() {
       <Route path="/cart" element={<PrivateRoute><Cart/></PrivateRoute>}/>
       <Route path="/auth/register" element={<Register/>}/>
       <Route path="/dashboard" element={<AdminRoute><Dashboard/></AdminRoute>}/>
+      <Route path="/dashboard/users" element={<AdminRoute><UserList/></AdminRoute>}/>
       <Route path="/dashboard/product-create" element={<AdminRoute><CreateProduct/></AdminRoute>}/>
       <Route path="/dashboard/products" element={<AdminRoute><Products/></AdminRoute>}/>
       <Route path="*" element={<NotFound/>}/>
+      <Route path="/dashboard/user-create" element={<AdminRoute><CreateUser/></AdminRoute>}/>
     </Routes>
     
     </>
