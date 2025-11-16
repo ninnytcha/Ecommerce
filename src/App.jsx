@@ -13,6 +13,7 @@ import { NotFound } from "./pages/NotFound404"
 import { Products } from "./pages/admin/Products"
 import { UserList } from "./pages/admin/UsersList"
 import { CreateUser } from "./pages/admin/CreateUser"
+import { CategoryPage } from "./pages/CategoryPage"
 
 function PrivateRoute ({children}) {
   const token = localStorage.getItem("token")
@@ -72,6 +73,7 @@ function App() {
       <Route path="/dashboard/products" element={<AdminRoute><Products/></AdminRoute>}/>
       <Route path="*" element={<NotFound/>}/>
       <Route path="/dashboard/user-create" element={<AdminRoute><CreateUser/></AdminRoute>}/>
+      <Route path="/productsbycategory/:id" element={<CategoryPage/>}/>
     </Routes>
     
     </>

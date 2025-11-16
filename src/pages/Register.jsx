@@ -52,9 +52,7 @@ export default function Register() {
       setMessage(error.message);
     }
   };
-
   
-
   return (
     <div  className="main-cont">
       <div className="flex justify-center items-center min-h-screen bg-gray-100">

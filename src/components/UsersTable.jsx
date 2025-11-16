@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "../styles/productTable.css";
 import { Link } from "react-router-dom";
-import { fetchProductList2 } from "../api/product";
 import { fetchUsersList } from "../api/user";
 
  const UsersTable = () => {
@@ -19,7 +18,6 @@ import { fetchUsersList } from "../api/user";
         "Authorization": `Bearer ${token}`,
       },
     });
-
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
   } catch (error) {
     console.error("Error deleting user:", error);
@@ -45,7 +43,7 @@ import { fetchUsersList } from "../api/user";
 
   const handleSaveEdit = async () => {
     const token = localStorage.getItem("token")
-     const response = await fetch(`https://api.escuelajs.co/api/v1/users/${editingUser.id}`, {
+    await fetch(`https://api.escuelajs.co/api/v1/users/${editingUser.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
@@ -63,12 +61,11 @@ import { fetchUsersList } from "../api/user";
   return (
     <div className="product-table-container">
       <h2>User's Table</h2>
-
-       Add New Product
+       Add New User
       <div className="add-product">
         <Link to="/dashboard/user-create" className="add-button">
           + Create user
-         </Link> 
+        </Link> 
       </div>
       <table>
         <thead>
@@ -81,7 +78,6 @@ import { fetchUsersList } from "../api/user";
             <th>Actions</th>
           </tr>
         </thead>
-
         <tbody>
           {users.map((user) =>
             editingUser && editingUser.id === user.id ? (
@@ -94,8 +90,6 @@ import { fetchUsersList } from "../api/user";
                     className="product-thumb"
                   />
                 </td>
-
-                {/* Editable fields */}
                 <td>
                   <input
                     type="text"
@@ -108,7 +102,6 @@ import { fetchUsersList } from "../api/user";
                     }
                   />
                 </td>
-
                 <td>
                   <input
                     type="email"
@@ -121,8 +114,6 @@ import { fetchUsersList } from "../api/user";
                     }
                   />
                 </td>
-
-                {/* Category - display only name */}
                 <td>
                     <input
                     type="text"

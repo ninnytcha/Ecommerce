@@ -1,5 +1,4 @@
 import ProductCreateForm from "../../components/CreateForm"
-import { Products } from "./Products"
 
 export const CreateProduct = () => {
     return (

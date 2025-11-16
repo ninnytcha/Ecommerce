@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import "../styles/productDetail.css"; 
 import { Link, useParams } from 'react-router-dom';
-import { fetchProduct, fetchProduct2 } from '../api/product';
+import { fetchProduct2 } from '../api/product';
+import { RelatedProductSlider } from '../components/Slider';
 
 const ProductDetail = () => {
   const token = localStorage.getItem("token")
@@ -13,17 +14,22 @@ const ProductDetail = () => {
           try {
             setLoading(true)
             const products = await fetchProduct2({id});
-            setProduct(products);
+            
+            if (products.status==200) {
+              setProduct( await products.json());
+            } else {
+              setProduct(products);
+            }
           } catch (error) {
             console.error("Failed to fetch products:", error);
           } finally {
             setLoading(false)
           }
-        };
-    
+        }
         loadProducts();
-      }, []);
-
+         
+      }, [id]);
+console.log(product)
       const AddToCart = () => {
         const cart = { userId: 1, products: [{ id: 4 }] };
         fetch(`https://fakestoreapi.com/carts/1`,{
@@ -38,14 +44,19 @@ const ProductDetail = () => {
         ).catch((error)=>
           console.error(error)
         )
-
       }
 
       if (loading) {
         return <span>Loading...</span>
       }
+      if (product.status==400) {
+        return <span>Product not found</span>
+      }
+
+
 
   return (
+    <div>
     <div className="product-detail">
         <Link to="/">Go back</Link>
       <img src={product?.images?.[0]} alt={product.title} className="product-image" />
@@ -57,7 +68,10 @@ const ProductDetail = () => {
         {token && <button onClick={AddToCart}>Add to Cart</button> } 
         
       </div>
+      </div>
+      <RelatedProductSlider id={id}/>
     </div>
+    
   );
 };
 

@@ -13,5 +13,9 @@ export const fetchProductList2 = async ({limit, offset}) => {
 }
 export const fetchProduct2 = async ({id}) => {
     const response = await fetch(`https://api.escuelajs.co/api/v1/products/${id}`)
+    return response
+}
+export const fetchRelatedProductByID = async (id) => {
+    const response = await fetch(`https://api.escuelajs.co/api/v1/products/${Number(id)}/related`)
     return response.json()
 }
