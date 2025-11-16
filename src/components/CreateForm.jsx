@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 function ProductCreateForm() {
   const [formData, setFormData] = useState({
@@ -53,7 +53,6 @@ function ProductCreateForm() {
       return;
     }
 
-    // Convert types properly (price, categoryId as numbers)
     const productData = {
       ...formData,
       price: Number(formData.price),
@@ -67,7 +66,6 @@ function ProductCreateForm() {
         })
         console.log(response)
 
-    // Reset form
     setFormData({
       title: "",
       price: "",

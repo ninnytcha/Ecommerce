@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function UserCreateForm() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -20,22 +22,13 @@ function UserCreateForm() {
     setFormData({ ...formData, avatar: value });
   };
 
-  const addImageField = () => {
-    setFormData({ ...formData, images: [...formData.images, ""] });
-  };
-
-  const removeImageField = (index) => {
-    const newImages = formData.images.filter((_, i) => i !== index);
-    setFormData({ ...formData, images: newImages });
-  };
-
   const validate = () => {
     const newErrors = {};
-   
-   // if (!formData.password) newErrors.password = "password is required.";
-
-    // if (!formData.images.length || formData.images.some((img) => !img))
-    //   newErrors.images = "At least one image URL is required.";
+    if (!formData.email) newErrors.email = "E-mail is required.";
+    if (!formData.name) newErrors.name = "Name is required.";
+    if (!formData.password) newErrors.password = "Password is required.";
+    if (!formData.role) newErrors.role = "Role is required.";
+    if (!formData.avatar) newErrors.avatar = "Avatar is required.";
     return newErrors;
   };
 
@@ -43,18 +36,14 @@ function UserCreateForm() {
     e.preventDefault();
     const validationErrors = validate();
     console.log(validationErrors)
+          console.log(e)
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
+      console.log(e)
     }
-
-    // Convert types properly (price, categoryId as numbers)
-    const productData = {
-      ...formData,
-      price: Number(formData.price),
-      categoryId: Number(formData.categoryId),
-    };
-
+    
     const response = await fetch("https://api.escuelajs.co/api/v1/users", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -62,15 +51,16 @@ function UserCreateForm() {
         })
         console.log(response)
 
-    // Reset form
     setFormData({
       email: "",
-        name: "",
-        password: "",
-        role: "",
-        avatar: "",
-        });
-        setErrors({});
+      name: "",
+      password: "",
+      role: "",
+      avatar: "",
+      });
+      setErrors({});
+      navigate("/dashboard/users")
+      
   };
 
   return (
@@ -104,7 +94,7 @@ function UserCreateForm() {
       <label style={styles.label}>
         Password
         <input
-          type="text"
+          type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
@@ -131,9 +121,9 @@ function UserCreateForm() {
           <span style={styles.error}>{errors.role}</span>
         )}
       </label>
+      
       <div style={styles.label}>
         <span>Avatar:</span>
-          {/* <div key={index} style={styles.imageRow}> */}
             <input
               type="text"
               placeholder="Avatar URL"
@@ -141,10 +131,8 @@ function UserCreateForm() {
               onChange={(e) => handleImageChange(e.target.value)}
               style={{ ...styles.input, flex: 1 }}
             />
-        {errors.images && <span style={styles.error}>{errors.images}</span>}
-      {/* </div> */}
+        {errors.avatar && <span style={styles.error}>{errors.avatar}</span>}
       </div>
-
       <button type="submit" style={styles.submitButton}>
         Create User
       </button>
